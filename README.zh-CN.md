@@ -26,20 +26,29 @@
 - 将 ZygiskFrida.zip 文件传输到您的设备并通过 Magisk 安装。
 - 安装后重新启动
 - 创建配置文件并将包名称调整为您的目标应用程序（替换命令中的“{your.target.application}”）
+- 
 ````shell
 adb shell 'su -c cp /data/local/tmp/re.zyg.fri/config.json.example /data/local/tmp/re.zyg.fri/config.json'
 adb shell 'su -c sed -i s/com.example.package/{your.target.application}/ /data/local/tmp/re.zyg.fri/config.json'
 ````
-- 启动您的应用程序。 它将在启动时暂停，以便您附加
-    `frida -U -N {your.target.application}` 或 `frida -U -n Gadget`
 
-这假设您没有运行任何其他 frida 服务器（例如使用 MagiskFrida）。
+- 启动您的应用程序。 它将在启动时暂停，以便您附加
+
+````shell
+frida -U -N {your.target.application}
+或者
+frida -U -n Gadget
+````
+
+【该模块*自带frida服务器*，且使用了默认端口，如您运行其他frida服务器，可能造成端口冲突。】
+
+我们假设您没有运行任何其他 frida 服务器（例如没有使用 MagiskFrida）。
 您仍然可以与 frida-server 一起运行它，但您必须配置该小工具
 使用不同的端口。
 
 ### 配置
 
-该模块还支持添加启动延迟，可以延迟小工具的注入
+该模块还支持添加*启动延迟*，可以延迟小工具的注入
 避免在启动时运行检查、加载任意库和子门控。
 
 请查看[配置指南](docs/advanced_config.md)。
