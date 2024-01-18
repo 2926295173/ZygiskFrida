@@ -48,7 +48,8 @@ frida -U -n Gadget
 
 ### 配置
 
-简单配置[简单配置](docs/simple_config.zh-CN.md)
+简单配置版 -》[简单配置](docs/simple_config.zh-CN.md)
+
 该模块还支持添加*启动延迟*，可以延迟小工具的注入
 避免在启动时运行检查、加载任意库和子门控。
 
