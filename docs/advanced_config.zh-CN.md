@@ -116,7 +116,7 @@ adb shell 'su -c Kill -9 $(pidof com.example.package)'
 子进程一旦被fork就会被杀死。 
 没有代码会在子进程中运行。
 
-### 注入（inject）模式
+### 注入模式（inject）
 此模式会将 “ injected_libraries ” 注入到与目标配置类似的子进程中。
 注入后，子进程将恢复其正常的代码流。
 如果子进程只是进行快速检查并退出，您可能无法以**交互方式**连接到小工具。
