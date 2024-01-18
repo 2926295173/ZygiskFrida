@@ -53,7 +53,7 @@ frida -U -n Gadget
 该模块还支持添加*启动延迟*，可以延迟小工具的注入
 避免在启动时运行检查、加载任意库和子门控。
 
-请查看[配置指南](docs/advanced_config.md)。
+请查看[配置指南](docs/advanced_config.zh-CN.md)。
 
 ## 如何构建
 
