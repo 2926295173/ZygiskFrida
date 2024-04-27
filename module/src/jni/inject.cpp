@@ -1,5 +1,7 @@
 #include "inject.h"
 
+#include <unistd.h>
+
 #include <chrono>
 #include <cinttypes>
 #include <filesystem>
@@ -14,6 +16,7 @@
 #include "log.h"
 #include "child_gating.h"
 #include "xdl.h"
+#include "remapper.h"
 
 static std::string get_process_name() {
     auto path = "/proc/self/cmdline";
@@ -66,6 +69,7 @@ void inject_lib(std::string const &lib_path, std::string const &logContext) {
     auto *handle = xdl_open(lib_path.c_str(), XDL_TRY_FORCE_LOAD);
     if (handle) {
         LOGI("%sInjected %s with handle %p", logContext.c_str(), lib_path.c_str(), handle);
+        remap_lib(lib_path);
         return;
     }
 
@@ -74,6 +78,7 @@ void inject_lib(std::string const &lib_path, std::string const &logContext) {
     handle = dlopen(lib_path.c_str(), RTLD_NOW);
     if (handle) {
         LOGI("%sInjected %s with handle %p (dlopen)", logContext.c_str(), lib_path.c_str(), handle);
+        remap_lib(lib_path);
         return;
     }
 
@@ -111,6 +116,8 @@ bool check_and_inject(std::string const &app_name) {
     }
 
     LOGI("App detected: %s", app_name.c_str());
+    LOGI("PID: %d", getpid());
+
 
     auto target_config = cfg.value();
     if (!target_config.enabled) {
